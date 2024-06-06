@@ -1,17 +1,9 @@
-package upt.albaproj.entities;
+package upt.albaproj.dtos;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
-
 @Data
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class UserRegistrationDto {
     private String firstName;
     private String middleName;
     private String lastName;
@@ -19,4 +11,5 @@ public class User {
     private String dateOfBirth;
     private String email;
     private String password;
+    private String confirmPassword;
 }

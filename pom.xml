@@ -23,6 +23,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- Thymleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        
         <!-- Spring Boot Starter Data JPA for Sp ring Data JPA with Hibernate -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
