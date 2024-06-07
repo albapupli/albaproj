@@ -4,6 +4,8 @@ package upt.albaproj.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/login", "/register", "/h2-console/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN") // Restrict admin endpoints
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
@@ -52,8 +55,7 @@ public class SecurityConfig {
                 )
                 .rememberMe(rememberMe ->
                         rememberMe
-                                .key("uniqueAndSecret")
-                                .tokenValiditySeconds(86400) // 24 hours
+                                .userDetailsService(userDetailsService())
                 );
         return http.build();
     }
@@ -66,11 +68,17 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userRepository.findByEmailOrPhoneNumber(username,username);
+            User user = userRepository.findByEmailOrPhoneNumber(username, username);
             if (user == null) {
                 throw new UsernameNotFoundException("User not found");
             }
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+
+            ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+            if (user.isAdmin()) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            }
+            
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
         };
     }
 }

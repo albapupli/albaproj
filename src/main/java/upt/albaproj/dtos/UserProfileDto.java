@@ -1,24 +1,18 @@
-package upt.albaproj.entities;
+package upt.albaproj.dtos;
 
-import jakarta.persistence.*;
 import lombok.Data;
-
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserProfileDto {
     private Long id;
-
     private String firstName;
     private String middleName;
     private String lastName;
     private String phoneNumber;
     private String dateOfBirth;
     private String email;
-    private String password;
+    private MultipartFile profilePhoto;
+
     private String profilePhotoPath;
-    private boolean isAdmin = false;
 }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+    <title>Edit User</title>
 </head>
 <body>
-<form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
+<form th:action="@{/admin/user/edit}" th:object="${user}" method="post" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}" />
     <div>
         <label>First Name:</label>
@@ -32,20 +32,13 @@
     </div>
     <div>
         <label>Profile Photo:</label>
-        <input type="file" th:field="*{profilePhoto}" />
-        <div>
-            <img th:if="${user.profilePhotoPath != null}" th:src="@{'/' + ${user.profilePhotoPath}}" alt="Profile Photo" width="200" />
+        <input type="file" name="profilePhoto" />
+        <div th:if="${user.profilePhoto}">
+            <img th:src="@{/profile-photos/{photo}(photo=${user.profilePhoto})}" alt="Profile Photo" />
         </div>
-    </div>    
-    <div>
-        <button type="submit">Update Profile</button>
     </div>
-</form>
-
-<form id="removePhotoForm" th:action="@{/profile/remove-photo}" method="post" th:if="${user.profilePhotoPath != null}">
-    <input type="hidden" th:field="*{user.id}" />
     <div>
-        <button type="submit">Remove Profile Pic</button>
+        <button type="submit">Update User</button>
     </div>
 </form>
 </body>
