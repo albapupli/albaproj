@@ -31,7 +31,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/login", "/register", "/h2-console/**").permitAll()
+                                .requestMatchers("/login", "/register", "/h2-console/**", "/css/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN") // Restrict admin endpoints
                                 .anyRequest().authenticated()
                 )
