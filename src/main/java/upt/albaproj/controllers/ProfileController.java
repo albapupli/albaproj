@@ -15,6 +15,8 @@ import upt.albaproj.dtos.UserProfileDto;
 import upt.albaproj.dtos.UserRegistrationDto;
 import upt.albaproj.services.UserService;
 
+import java.util.Objects;
+
 @Controller
 public class ProfileController {
 
@@ -39,6 +41,7 @@ public class ProfileController {
     public String profile(@AuthenticationPrincipal(errorOnInvalidType = true) User loggedInUser, Model model) {
         UserProfileDto userProfile = userService.getUserProfile(loggedInUser.getUsername());
         model.addAttribute("user", userProfile);
+        model.addAttribute("isAdmin", loggedInUser.getAuthorities().stream().anyMatch(a -> Objects.equals(a.getAuthority(), "ROLE_ADMIN")));
         return "profile";
     }
 

@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
-    <input type="hidden" th:field="*{id}" />
-    <div>
-        <label>First Name:</label>
-        <input type="text" th:field="*{firstName}" />
-    </div>
-    <div>
-        <label>Middle Name:</label>
-        <input type="text" th:field="*{middleName}" />
-    </div>
-    <div>
-        <label>Last Name:</label>
-        <input type="text" th:field="*{lastName}" />
-    </div>
-    <div>
-        <label>Phone Number:</label>
-        <input type="text" th:field="*{phoneNumber}" />
-    </div>
-    <div>
-        <label>Date of Birth:</label>
-        <input type="date" th:field="*{dateOfBirth}" />
-    </div>
-    <div>
-        <label>Email:</label>
-        <input type="email" th:field="*{email}" />
-    </div>
-    <div>
-        <label>Profile Photo:</label>
-        <input type="file" th:field="*{profilePhoto}" />
-        <div>
-            <img th:if="${user.profilePhotoPath != null}" th:src="@{'/' + ${user.profilePhotoPath}}" alt="Profile Photo" width="200" />
+<header>
+    <div class="container">
+        <div id="branding">
+            <h1>Alba Pupli</h1>
         </div>
-    </div>    
-    <div>
-        <button type="submit">Update Profile</button>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+                <li th:if="${isAdmin}"><a th:href="@{/admin/users}">Admin</a></li>
+                <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </nav>
     </div>
-</form>
+</header>
+<div class="container">
+    <h2>Profile</h2>
+    <img th:src="@{${user.profilePhotoPath}}" class="profile-img" alt="Profile Photo">
+    <form th:action="@{/profile}" th:object="${user}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <label>First Name:</label>
+            <input type="text" th:field="*{firstName}" />
+        </div>
+        <div>
+            <label>Middle Name:</label>
+            <input type="text" th:field="*{middleName}" />
+        </div>
+        <div>
+            <label>Last Name:</label>
+            <input type="text" th:field="*{lastName}" />
+        </div>
+        <div>
+            <label>Phone Number:</label>
+            <input type="text" th:field="*{phoneNumber}" />
+        </div>
+        <div>
+            <label>Date of Birth:</label>
+            <input type="date" th:field="*{dateOfBirth}" />
+        </div>
+        <div>
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" />
+        </div>
 
-<form id="removePhotoForm" th:action="@{/profile/remove-photo}" method="post" th:if="${user.profilePhotoPath != null}">
-    <input type="hidden" th:field="*{user.id}" />
-    <div>
-        <button type="submit">Remove Profile Pic</button>
-    </div>
-</form>
+        <label for="profilePhoto">Profile Photo:</label>
+        <input type="file" id="profilePhoto" name="profilePhoto">
+
+        <input type="submit" value="Update Profile">
+    </form>
+</div>
 </body>
 </html>
