@@ -65,7 +65,7 @@ public class ProfileController {
     @GetMapping("/admin/user/add")
     public String addUser(Model model) {
         model.addAttribute("user", new UserRegistrationDto());
-        return "redirect:/admin/users?success";
+        return "add_user";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
