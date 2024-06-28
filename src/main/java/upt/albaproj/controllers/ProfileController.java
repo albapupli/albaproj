@@ -1,5 +1,6 @@
 package upt.albaproj.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,7 @@ import upt.albaproj.dtos.UserProfileDto;
 import upt.albaproj.dtos.UserRegistrationDto;
 import upt.albaproj.services.UserService;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @Controller
@@ -57,6 +59,20 @@ public class ProfileController {
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "user_list";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/user/add")
+    public String addUser(Model model) {
+        model.addAttribute("user", new UserRegistrationDto());
+        return "add_user";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin/user/add")
+    public String updateUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
+        userService.save(registrationDto);
+        return "redirect:/admin/users?success";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -116,4 +132,12 @@ public class ProfileController {
         model.addAttribute("users", userService.getDevsByName(name));
         return "devs_list_by_name";
     }
+
+//    @GetMapping("profile/export")
+//    public void exportToCsv(HttpServletResponse response) throws IOException {
+//        response.setContentType("text/csv");
+//        response.setHeader("Content-Disposition", "attachment; filename=users.csv");
+//        userService.writeUsersToCsv(response.getWriter());
+//    }
+
 }

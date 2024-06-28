@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+//import org.apache.commons.csv.CSVFormat;
+//import org.apache.commons.csv.CSVPrinter;
 import upt.albaproj.dtos.UserProfileDto;
 import upt.albaproj.dtos.UserRegistrationDto;
 import upt.albaproj.entities.User;
@@ -12,6 +14,7 @@ import upt.albaproj.enums.Skill;
 import upt.albaproj.repos.UserRepository;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -156,4 +159,13 @@ public class UserService {
         // Set other fields as necessary
         return userRepository.save(user);
     }
+/*
+    public void writeUsersToCsv(Writer writer) throws IOException {
+        List<User> users = userRepository.findAll();
+        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID", "First Name", "Last Name", "Email"))) {
+            for (User user : users) {
+                csvPrinter.printRecord(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
+            }
+        }
+    }*/
 }
