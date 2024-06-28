@@ -13,6 +13,8 @@ public class UserProfileDto {
     private String dateOfBirth;
     private String email;
     private MultipartFile profilePhoto;
-
+    private String experience;
+    private String skills;
     private String profilePhotoPath;
+    private boolean developer;
 }

@@ -87,4 +87,33 @@ public class ProfileController {
         userService.removeProfilePhoto(userProfileDto.getId());
         return "redirect:/profile";
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin/user/add")
+    public String addUser(@ModelAttribute("user") UserProfileDto userProfileDto,
+                             @RequestParam("profilePhoto") MultipartFile profilePhoto) {
+        userService.updateUserProfile(userProfileDto, profilePhoto);
+        return "redirect:/admin/users?success";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/findDevsBySkill")
+    public String listDevsBySkill(Model model , String skill) {
+        model.addAttribute("users", userService.getDevsBySkill(skill));
+        return "devs_list_by_skills";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/findDevsByExeperience")
+    public String listDevsByExperience(Model model , String experience) {
+        model.addAttribute("users", userService.getDevsByExperience(experience));
+        return "devs_list_by_experience";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/findDevsByName")
+    public String listDevsByName(Model model , String name) {
+        model.addAttribute("users", userService.getDevsByName(name));
+        return "devs_list_by_name";
+    }
 }

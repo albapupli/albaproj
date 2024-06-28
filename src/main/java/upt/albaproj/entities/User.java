@@ -2,6 +2,8 @@ package upt.albaproj.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import upt.albaproj.enums.Experience;
+import upt.albaproj.enums.Skill;
 
 
 @Data
@@ -20,5 +22,10 @@ public class User {
     private String email;
     private String password;
     private String profilePhotoPath;
+    private boolean developer = false;
     private boolean isAdmin = false;
+    @Column(name = "experience")
+    private Experience experience;
+    @Column(name = "skills")
+    private Skill skills;
 }
