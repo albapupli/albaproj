@@ -13,14 +13,22 @@ import upt.albaproj.enums.Experience;
 import upt.albaproj.enums.Skill;
 import upt.albaproj.repos.UserRepository;
 
+import javax.swing.text.Document;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+/*import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;*/
 
 @Service
 public class UserService {
@@ -43,9 +51,9 @@ public class UserService {
         user.setDateOfBirth(registrationDto.getDateOfBirth());
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-        user.setDeveloper(registrationDto.isDeveloper());
-        user.setSkills(Skill.valueOf(registrationDto.getSkills()));
-        user.setExperience(Experience.valueOf(registrationDto.getExperience()));
+      //  user.setDeveloper(registrationDto.isDeveloper());
+   //     user.setSkills(Skill.valueOf(registrationDto.getSkills()));
+    //    user.setExperience(Experience.valueOf(registrationDto.getExperience()));
 
         userRepository.save(user);
     }
@@ -159,13 +167,51 @@ public class UserService {
         // Set other fields as necessary
         return userRepository.save(user);
     }
-
-   /* public void writeUsersToCsv(Writer writer) throws IOException {
-        List<User> users = userRepository.findAll();
-        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID", "First Name", "Last Name", "Email"))) {
-            for (User user : users) {
-                csvPrinter.printRecord(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
-            }
+/*
+    public ByteArrayInputStream generateUserProfilePdf(Long userId) throws IOException {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            throw new RuntimeException("User not found");
         }
+        User user = userOptional.get();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (PDDocument document = new PDDocument()) {
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+                contentStream.newLineAtOffset(100, 700);
+                contentStream.showText("User Profile");
+                contentStream.endText();
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, 650);
+                contentStream.showText("Name: " + user.getName());
+                contentStream.endText();
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, 600);
+                contentStream.showText("Projects:");
+                contentStream.endText();
+
+                int yOffset = 580;
+                for (Project project : user.getProjects()) {
+                    contentStream.beginText();
+                    contentStream.setFont(PDType1Font.HELVETICA, 12);
+                    contentStream.newLineAtOffset(120, yOffset);
+                    contentStream.showText("- " + project.getName());
+                    contentStream.endText();
+                    yOffset -= 20;
+                }
+            }
+
+            document.save(out);
+        }
+        return new ByteArrayInputStream(out.toByteArray());
     }*/
 }

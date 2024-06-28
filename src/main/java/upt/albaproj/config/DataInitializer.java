@@ -31,7 +31,7 @@ public class DataInitializer {
             userRepository.save(testUser);
         };
     }
-
+/*
     @Bean
     public CommandLineRunner init(ProjectRepository projectRepository) {
         return args -> {
@@ -46,5 +46,5 @@ public class DataInitializer {
             projectRepository.save(project1);
             projectRepository.save(project2);
         };
-    }
+    }*/
 }

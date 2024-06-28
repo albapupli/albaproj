@@ -5,6 +5,9 @@ import lombok.Data;
 import upt.albaproj.enums.Experience;
 import upt.albaproj.enums.Skill;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Data
 @Entity
@@ -29,4 +32,7 @@ public class User {
 
     @Column(name = "skills")
     private Skill skills;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Project> projects = new HashSet<>();
 }

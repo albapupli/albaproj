@@ -69,7 +69,7 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin/user/add")
+    @PostMapping("/admin/user/update")
     public String updateUser(@ModelAttribute("user") UserRegistrationDto registrationDto) {
         userService.save(registrationDto);
         return "redirect:/admin/users?success";
