@@ -9,7 +9,7 @@
 <header>
     <div class="container">
         <div id="branding">
-            <h1>Alba Pupli - Admin</h1>
+            <h1>Admin</h1>
         </div>
         <nav>
             <ul>
@@ -42,6 +42,7 @@
             <td th:text="${user.email}">john.doe@example.com</td>
             <td th:text="${user.phoneNumber}">+1234567890</td>
             <td>
+                <a th:href="@{/admin/user/add(id=${user.id})}">Add</a>
                 <a th:href="@{/admin/user/edit(id=${user.id})}">Edit</a>
                 <a th:href="@{/admin/user/delete(id=${user.id})}" onclick="return confirm('Are you sure?')">Delete</a>
             </td>

@@ -159,8 +159,8 @@ public class UserService {
         // Set other fields as necessary
         return userRepository.save(user);
     }
-/*
-    public void writeUsersToCsv(Writer writer) throws IOException {
+
+   /* public void writeUsersToCsv(Writer writer) throws IOException {
         List<User> users = userRepository.findAll();
         try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("ID", "First Name", "Last Name", "Email"))) {
             for (User user : users) {

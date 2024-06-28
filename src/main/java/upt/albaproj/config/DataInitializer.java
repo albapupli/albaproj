@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import upt.albaproj.entities.Project;
 import upt.albaproj.entities.User;
+import upt.albaproj.repos.ProjectRepository;
 import upt.albaproj.repos.UserRepository;
+import upt.albaproj.services.UserService;
 
 @Configuration
 public class DataInitializer {
@@ -26,6 +29,22 @@ public class DataInitializer {
             testUser.setPassword(passwordEncoder.encode("alba"));
             testUser.setAdmin(true);
             userRepository.save(testUser);
+        };
+    }
+
+    @Bean
+    public CommandLineRunner init(ProjectRepository projectRepository) {
+        return args -> {
+
+            Project project1 = new Project();
+            project1.setName("Project A");
+
+            Project project2 = new Project();
+            project2.setName("Project B");
+
+
+            projectRepository.save(project1);
+            projectRepository.save(project2);
         };
     }
 }

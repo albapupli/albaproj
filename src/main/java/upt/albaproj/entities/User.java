@@ -26,6 +26,7 @@ public class User {
     private boolean isAdmin = false;
     @Column(name = "experience")
     private Experience experience;
+
     @Column(name = "skills")
     private Skill skills;
 }
