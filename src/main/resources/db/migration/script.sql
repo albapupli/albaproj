@@ -20,3 +20,13 @@ CREATE TABLE projects (
    description VARCHAR(255) NOT NULL,
    FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+-- Create user_projects table to establish many-to-many relationship
+CREATE TABLE user_projects (
+    user_id INT,
+    project_id INT,
+    PRIMARY KEY (user_id, project_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);
