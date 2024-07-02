@@ -9,5 +9,7 @@ CREATE TABLE users (
    email VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    profile_photo_path VARCHAR(255),
-   is_admin BOOLEAN DEFAULT FALSE
+   is_admin BOOLEAN DEFAULT FALSE,
+   experience VARCHAR(255) NOT NULL,
+   skill VARCHAR(255) NOT NULL
 );
