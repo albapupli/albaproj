@@ -11,5 +11,12 @@ CREATE TABLE users (
    profile_photo_path VARCHAR(255),
    is_admin BOOLEAN DEFAULT FALSE,
    experience VARCHAR(255) NOT NULL,
-   skill VARCHAR(255) NOT NULL
+   skill VARCHAR(255) NOT NULL,
+   FOREIGN KEY (project_id) REFERENCES projects(id)
+);
+
+CREATE TABLE projects (
+   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+   description VARCHAR(255) NOT NULL,
+   FOREIGN KEY (user_id) REFERENCES users(id)
 );
